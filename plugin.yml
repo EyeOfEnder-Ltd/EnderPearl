@@ -1,0 +1,14 @@
+name: EnderPearl
+main: com.eyeofender.enderpearl.EnderPearl
+author: LimeByte
+version: 0.1.4
+database: false
+commands:
+    broadcast:
+        description: Broadcasts a message to the specified server(s)
+        usage: /<command> <server> <message...>
+        permission: enderpearl.command.broadcast
+permissions:
+    enderpearl.command.broadcast:
+        description: Permission to use the broadcast command
+        default: op
