@@ -71,7 +71,10 @@ public class RankManager {
     }
 
     public void updateRank(Player player) {
-        Rank rank = ranks.get(getConfig().getString("players." + player.getName(), "default"));
+        String rankName = getConfig().getString("players." + player.getName(), "default");
+        plugin.getLogger().warning("Could not find " + player.getName() + "'s rank, " + rankName);
+
+        Rank rank = ranks.get(rankName);
         if (rank == null) return;
         rank.apply(player);
     }

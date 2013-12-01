@@ -9,9 +9,6 @@ public class EnderPearl extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new PlayerListener(this), this);
-
         BroadcastCommand broadcast = new BroadcastCommand(this);
         getCommand("broadcast").setExecutor(broadcast);
 
@@ -19,6 +16,9 @@ public class EnderPearl extends JavaPlugin {
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", broadcast);
 
         rankManager = new RankManager(this);
+
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new PlayerListener(this), this);
     }
 
     public RankManager getRankManager() {

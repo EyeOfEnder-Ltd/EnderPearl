@@ -13,15 +13,18 @@ public class Rank {
     private Team team;
 
     public Rank(String prefix, String displayName, Scoreboard scoreboard) {
-        this.prefix = prefix;
+        this.prefix = ChatColor.translateAlternateColorCodes('&', prefix);
         this.displayName = displayName;
 
-        this.team = scoreboard.registerNewTeam(displayName);
-        team.setPrefix(prefix);
+        if (displayName != null) {
+            this.team = scoreboard.getTeam(displayName);
+            if (team == null) scoreboard.registerNewTeam(displayName);
+            team.setPrefix(prefix);
+        }
     }
 
     public void apply(Player player) {
-        team.addPlayer(player);
+        if (team != null) team.addPlayer(player);
         String name = ChatColor.WHITE + player.getName();
         if (displayName != null) name = ChatColor.WHITE + prefix + "[" + displayName + "] " + ChatColor.WHITE + player.getName();
         player.setDisplayName(name);
