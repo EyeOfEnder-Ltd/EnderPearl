@@ -19,7 +19,7 @@ public class Rank {
         if (displayName != null) {
             this.team = scoreboard.getTeam(displayName);
             if (team == null) scoreboard.registerNewTeam(displayName);
-            team.setPrefix(prefix);
+            team.setPrefix(this.prefix);
         }
     }
 
@@ -28,6 +28,5 @@ public class Rank {
         String name = ChatColor.WHITE + player.getName();
         if (displayName != null) name = ChatColor.WHITE + prefix + "[" + displayName + "] " + ChatColor.WHITE + player.getName();
         player.setDisplayName(name);
-        player.setPlayerListName(prefix + player.getName());
     }
 }
