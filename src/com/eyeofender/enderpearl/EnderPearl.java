@@ -10,6 +10,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eyeofender.enderpearl.commands.BroadcastCommand;
+import com.eyeofender.enderpearl.commands.SetSpawnCommand;
+import com.eyeofender.enderpearl.commands.SpawnCommand;
 import com.eyeofender.enderpearl.listeners.PlayerListener;
 import com.eyeofender.enderpearl.ranks.RankEntry;
 import com.eyeofender.enderpearl.ranks.RankManager;
@@ -23,6 +25,8 @@ public class EnderPearl extends JavaPlugin {
     public void onEnable() {
         BroadcastCommand broadcast = new BroadcastCommand(this);
         getCommand("broadcast").setExecutor(broadcast);
+        getCommand("setspawn").setExecutor(new SetSpawnCommand(this));
+        getCommand("spawn").setExecutor(new SpawnCommand(this));
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", broadcast);
