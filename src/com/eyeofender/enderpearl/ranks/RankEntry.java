@@ -39,12 +39,12 @@ public class RankEntry {
         this.name = player.getName();
     }
 
-    public String getType() {
+    public String getRank() {
         return rank;
     }
 
-    public void setType(String type) {
-        this.rank = type;
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 
     public Date getExpiry() {

@@ -103,7 +103,7 @@ public class RankManager {
 
             if (expiry != null) {
                 Date date = new Date(new java.util.Date().getTime());
-                String type = entry.getType();
+                String type = entry.getRank();
                 if (expiry.after(date)) {
                     if (warn) {
                         long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - date.getTime()) + 1;
@@ -112,14 +112,14 @@ public class RankManager {
                             player.sendMessage("Visit http://eyeofender.com/shop to renew your membership.");
                         }
                     }
-                    rankName = entry.getType();
+                    rankName = type;
                 } else {
                     player.sendMessage("Your " + type + " membership has expired!");
                     player.sendMessage("Visit http://eyeofender.com/shop to renew your membership.");
                     plugin.getDatabase().delete(entry);
                 }
             } else {
-                rankName = entry.getType();
+                rankName = entry.getRank();
             }
         }
 
