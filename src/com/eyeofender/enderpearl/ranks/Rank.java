@@ -26,7 +26,7 @@ public class Rank {
     public void apply(Player player) {
         if (team != null) team.addPlayer(player);
         String name = player.getName().equalsIgnoreCase("limebyte") ? "LimeByte" : player.getName();
-        if (displayName != null) name = prefix + "[" + displayName + "] " + ChatColor.WHITE + name;
+        if (displayName != null) name = prefix + "[" + displayName + "]" + ChatColor.WHITE + " <" + prefix + name + ChatColor.WHITE + " >";
         player.setDisplayName(ChatColor.WHITE + name);
     }
 }

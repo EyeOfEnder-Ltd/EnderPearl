@@ -3,6 +3,7 @@ package com.eyeofender.enderpearl.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.eyeofender.enderpearl.EnderPearl;
@@ -24,6 +25,11 @@ public class PlayerListener implements Listener {
         if (plugin.getSpawnLocation() != null) {
             player.teleport(plugin.getSpawnLocation());
         }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        event.setFormat("%s %s");
     }
 
 }
