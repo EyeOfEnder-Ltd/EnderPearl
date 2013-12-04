@@ -1,4 +1,4 @@
-package com.eyeofender.enderpearl;
+package com.eyeofender.enderpearl.ranks;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,8 +25,8 @@ public class Rank {
 
     public void apply(Player player) {
         if (team != null) team.addPlayer(player);
-        String name = ChatColor.WHITE + player.getName();
-        if (displayName != null) name = ChatColor.WHITE + prefix + "[" + displayName + "] " + ChatColor.WHITE + player.getName();
-        player.setDisplayName(name);
+        String name = player.getName().equalsIgnoreCase("limebyte") ? "LimeByte" : player.getName();
+        if (displayName != null) name = prefix + "[" + displayName + "] " + ChatColor.WHITE + name;
+        player.setDisplayName(ChatColor.WHITE + name);
     }
 }

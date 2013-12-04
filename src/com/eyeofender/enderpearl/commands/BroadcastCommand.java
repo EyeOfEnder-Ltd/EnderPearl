@@ -1,4 +1,4 @@
-package com.eyeofender.enderpearl;
+package com.eyeofender.enderpearl.commands;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+import com.eyeofender.enderpearl.Util;
 import com.google.common.collect.Maps;
 
 public class BroadcastCommand implements CommandExecutor, PluginMessageListener {

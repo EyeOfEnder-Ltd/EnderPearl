@@ -1,8 +1,11 @@
-package com.eyeofender.enderpearl;
+package com.eyeofender.enderpearl.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import com.eyeofender.enderpearl.EnderPearl;
 
 public class PlayerListener implements Listener {
 
@@ -14,7 +17,13 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        plugin.getRankManager().updateRank(event.getPlayer());
+        Player player = event.getPlayer();
+
+        plugin.getRankManager().updateRank(player, true);
+
+        if (plugin.getSpawnLocation() != null) {
+            player.teleport(plugin.getSpawnLocation());
+        }
     }
 
 }
