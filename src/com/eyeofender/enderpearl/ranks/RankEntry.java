@@ -13,7 +13,7 @@ import com.avaje.ebean.validation.Length;
 import com.avaje.ebean.validation.NotEmpty;
 
 @Entity
-@Table(name = "global_ranks")
+@Table(name = "GlobalRanks")
 public class RankEntry {
 
     @Id

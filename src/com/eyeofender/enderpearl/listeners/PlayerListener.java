@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import com.eyeofender.enderpearl.EnderPearl;
 
@@ -15,6 +17,15 @@ public class PlayerListener implements Listener {
 
     public PlayerListener(EnderPearl plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent event) {
+        if (event.getResult() == Result.KICK_FULL) {
+            if (plugin.getRankManager().hasRank(event.getPlayer())) {
+                event.allow();
+            }
+        }
     }
 
     @EventHandler

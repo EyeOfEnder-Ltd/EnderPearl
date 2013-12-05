@@ -94,6 +94,11 @@ public class RankManager {
         }
     }
 
+    public boolean hasRank(Player player) {
+        RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
+        return entry != null;
+    }
+
     public void updateRank(Player player, boolean warn) {
         String rankName = "default";
         RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
