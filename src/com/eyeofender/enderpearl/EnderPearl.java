@@ -10,6 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.eyeofender.enderpearl.commands.BroadcastCommand;
+import com.eyeofender.enderpearl.commands.HubCommand;
 import com.eyeofender.enderpearl.commands.SetSpawnCommand;
 import com.eyeofender.enderpearl.commands.SpawnCommand;
 import com.eyeofender.enderpearl.listeners.PlayerListener;
@@ -23,8 +24,11 @@ public class EnderPearl extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        BroadcastCommand broadcast = new BroadcastCommand(this);
+        Util.init(this);
+
+        BroadcastCommand broadcast = new BroadcastCommand();
         getCommand("broadcast").setExecutor(broadcast);
+        getCommand("hub").setExecutor(new HubCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand(this));
         getCommand("spawn").setExecutor(new SpawnCommand(this));
 

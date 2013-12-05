@@ -1,28 +1,38 @@
 name: EnderPearl
 main: com.eyeofender.enderpearl.EnderPearl
 author: LimeByte
-version: 0.3.4
+version: 0.4.0
 database: true
 commands:
     broadcast:
         description: Broadcasts a message to the specified server(s)
         usage: /<command> <server> <message...>
         permission: enderpearl.command.broadcast
-    spawn:
-        description: Teleports the player to the spawn
+        aliases: announce
+    hub:
+        description: Teleports the player to the hub
         usage: /<command>
-        permission: enderpearl.command.spawn
+        permission: enderpearl.command.hub
+        aliases: leave
     setspawn:
         description: Sets the spawn point
         usage: /<command>
         permission: enderpearl.command.setspawn
+        aliases: spawnset
+    spawn:
+        description: Teleports the player to the spawn
+        usage: /<command>
+        permission: enderpearl.command.spawn
 permissions:
     enderpearl.command.broadcast:
         description: Permission to use the broadcast command
         default: op
-    enderpearl.command.spawn:
-        description: Permission to use the spawn command
+    enderpearl.command.hub:
+        description: Permission to use the hub command
         default: true
     enderpearl.command.setspawn:
         description: Permission to use the setspawn command
         default: op
+    enderpearl.command.spawn:
+        description: Permission to use the spawn command
+        default: true
