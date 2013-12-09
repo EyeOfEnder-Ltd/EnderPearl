@@ -1,21 +1,15 @@
 ranks:
     owner:
-        colour: '&1'
+        colour: '&4'
         displayname: 'Owner'
     admin:
-        colour: '&3'
+        colour: '&4'
         displayname: 'Admin'
     mod:
-        colour: '&4'
+        colour: '&c'
         displayname: 'Moderator'
     developer:
         colour: '&5'
         displayname: 'Developer'
     default:
         colour: '&f'
-
-players:
-    limebyte: developer
-    avery246813579: developer
-    shazz96: owner
-    enayet123: admin
