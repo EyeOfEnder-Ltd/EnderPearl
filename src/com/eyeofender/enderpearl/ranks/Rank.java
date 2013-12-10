@@ -18,7 +18,7 @@ public class Rank {
 
         if (displayName != null) {
             this.team = scoreboard.getTeam(displayName);
-            if (team == null) scoreboard.registerNewTeam(displayName);
+            if (team == null) this.team = scoreboard.registerNewTeam(displayName);
             team.setPrefix(this.prefix);
         }
     }
