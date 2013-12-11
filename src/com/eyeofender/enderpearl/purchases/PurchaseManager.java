@@ -72,7 +72,7 @@ public class PurchaseManager {
                 if (warn) {
                     long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - date.getTime()) + 1;
                     if (days <= 7) {
-                        player.sendMessage(ChatColor.GREEN + "Your " + item + " for " + game + " will expire in " + days + (days <= 1 ? " less than a day!" : " days!"));
+                        player.sendMessage(ChatColor.GREEN + "Your " + item + " for " + game + " will expire in " + (days <= 1 ? "less than a day!" : days + " days!"));
                         player.sendMessage(ChatColor.GREEN + "Visit http://eyeofender.com/shop to purchase a new one.");
                     }
                 }

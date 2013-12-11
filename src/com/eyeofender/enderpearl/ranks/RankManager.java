@@ -83,9 +83,12 @@ public class RankManager {
         }
     }
 
+    public RankEntry getRank(Player player) {
+        return plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
+    }
+
     public boolean hasRank(Player player) {
-        RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
-        return entry != null;
+        return getRank(player) != null;
     }
 
     public void updateRank(Player player, boolean warn) {

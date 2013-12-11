@@ -25,20 +25,18 @@ public class PurchasesCommand implements CommandExecutor {
         Player player = (Player) sender;
         List<Purchase> purchases = plugin.getPurchaseManager().getPurchases(player);
 
-        player.sendMessage(ChatColor.GREEN + "-- " + ChatColor.GOLD + "Purchases:" + ChatColor.GREEN + " -------");
+        player.sendMessage(ChatColor.GREEN + "-- " + ChatColor.BOLD + "Purchases:" + ChatColor.RESET + ChatColor.GREEN + " -------");
 
         if (purchases == null || purchases.isEmpty()) {
             player.sendMessage(ChatColor.RED + "You do not own any items!");
             player.sendMessage(ChatColor.GREEN + "Visit http://eyeofender.com/shop to purchase some.");
-            return true;
         } else {
-
             for (Purchase purchase : purchases) {
-                String info = ChatColor.GOLD + "" + ChatColor.BOLD + " \u2022 " + purchase.getMinigame() + " " + purchase.getType() + ": " + ChatColor.RESET + ChatColor.GREEN + purchase.getPurchase();
-                player.sendMessage(purchase.getExpiry() != null ? info + ". Expires " + purchase.getExpiry() : info + ".");
+                String info = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getMinigame() + " " + purchase.getType() + ": " + ChatColor.RESET + ChatColor.GREEN + purchase.getPurchase();
+                player.sendMessage(purchase.getExpiry() != null ? info + ChatColor.GRAY + " Until " + purchase.getExpiry() : info);
             }
         }
-        player.sendMessage(ChatColor.GOLD + "--------------------");
+        player.sendMessage(ChatColor.GREEN + "--------------------");
         return true;
     }
 

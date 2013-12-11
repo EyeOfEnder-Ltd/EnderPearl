@@ -1,7 +1,7 @@
 name: EnderPearl
 main: com.eyeofender.enderpearl.EnderPearl
 author: LimeByte
-version: 0.5.3
+version: 1.0.0
 database: true
 commands:
     broadcast:
