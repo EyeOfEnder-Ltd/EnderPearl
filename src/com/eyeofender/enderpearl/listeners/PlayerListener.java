@@ -33,6 +33,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         plugin.getRankManager().updateRank(player, true);
+        plugin.getPurchaseManager().updatePurchases(player, true);
 
         if (plugin.getSpawnLocation() != null) {
             player.teleport(plugin.getSpawnLocation());

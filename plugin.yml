@@ -1,7 +1,7 @@
 name: EnderPearl
 main: com.eyeofender.enderpearl.EnderPearl
 author: LimeByte
-version: 0.4.2
+version: 0.5.3
 database: true
 commands:
     broadcast:
@@ -23,6 +23,10 @@ commands:
         description: Teleports the player to the spawn
         usage: /<command>
         permission: enderpearl.command.spawn
+    purchases:
+        description: Lists your purchases
+        usage: /<command>
+        permission: enderpearl.command.purchases
 permissions:
     enderpearl.command.broadcast:
         description: Permission to use the broadcast command
@@ -35,4 +39,7 @@ permissions:
         default: op
     enderpearl.command.spawn:
         description: Permission to use the spawn command
+        default: true
+    enderpearl.command.purchases:
+        description: Permission to use the purchases command
         default: true

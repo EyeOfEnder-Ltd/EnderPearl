@@ -8,9 +8,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import javax.persistence.PersistenceException;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -32,7 +31,6 @@ public class RankManager {
         this.ranks = Maps.newHashMap();
 
         loadRanks();
-        loadPlayers();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new BukkitRunnable() {
             @Override
@@ -85,15 +83,6 @@ public class RankManager {
         }
     }
 
-    private void loadPlayers() {
-        try {
-            plugin.getDatabase().find(RankEntry.class).findRowCount();
-        } catch (PersistenceException ex) {
-            plugin.getLogger().info("Installing database due to first time usage.");
-            plugin.installDDL();
-        }
-    }
-
     public boolean hasRank(Player player) {
         RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
         return entry != null;
@@ -113,14 +102,14 @@ public class RankManager {
                     if (warn) {
                         long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - date.getTime()) + 1;
                         if (days <= 7) {
-                            player.sendMessage("Your " + type + " membership will expire in " + days + (days == 1 ? " day!" : " days!"));
-                            player.sendMessage("Visit http://eyeofender.com/shop to renew your membership.");
+                            player.sendMessage(ChatColor.GOLD + "Your " + type + " membership will expire in " + days + (days == 1 ? " day!" : " days!"));
+                            player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to renew your membership.");
                         }
                     }
                     rankName = type;
                 } else {
-                    player.sendMessage("Your " + type + " membership has expired!");
-                    player.sendMessage("Visit http://eyeofender.com/shop to renew your membership.");
+                    player.sendMessage(ChatColor.GOLD + "Your " + type + " membership has expired!");
+                    player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to renew your membership.");
                     plugin.getDatabase().delete(entry);
                 }
             } else {
