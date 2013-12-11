@@ -8,6 +8,7 @@ import javax.persistence.PersistenceException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -71,6 +72,10 @@ public class EnderPearl extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Util.sendPM(player, "Connect", "hub");
+        }
     }
 
     @Override
