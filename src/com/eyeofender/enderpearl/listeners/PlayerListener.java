@@ -1,6 +1,9 @@
 package com.eyeofender.enderpearl.listeners;
 
+import java.util.Random;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +16,7 @@ import com.eyeofender.enderpearl.EnderPearl;
 
 public class PlayerListener implements Listener {
 
+    private static Random rand = new Random();
     private EnderPearl plugin;
 
     public PlayerListener(EnderPearl plugin) {
@@ -36,7 +40,12 @@ public class PlayerListener implements Listener {
         plugin.getPurchaseManager().updatePurchases(player, true);
 
         if (plugin.getSpawnLocation() != null) {
-            player.teleport(plugin.getSpawnLocation());
+            Location loc = plugin.getSpawnLocation();
+            double xAddition = rand.nextInt(7) - 3;
+            double zAddition = rand.nextInt(7) - 3;
+            float yaw = (float) Math.toDegrees(-Math.atan2(xAddition, zAddition));
+
+            player.teleport(new Location(loc.getWorld(), loc.getX() + xAddition, loc.getY(), loc.getZ() + zAddition, yaw, loc.getPitch()));
         }
     }
 
