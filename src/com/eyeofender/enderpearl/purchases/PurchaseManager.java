@@ -64,21 +64,21 @@ public class PurchaseManager {
         for (Purchase purchase : purchases) {
             Timestamp expiry = purchase.getExpiry();
             if (expiry == null) continue;
-            Timestamp date = new Timestamp(System.currentTimeMillis());
-            String item = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getPurchase() + ChatColor.RESET + ChatColor.GREEN + " " + purchase.getType();
-            String game = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getMinigame() + ChatColor.RESET + ChatColor.GREEN;
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            String item = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getPurchase() + ChatColor.RESET + ChatColor.YELLOW + " " + purchase.getType();
+            String game = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getMinigame() + ChatColor.RESET + ChatColor.YELLOW;
 
-            if (expiry.after(date)) {
+            if (expiry.after(currentTime)) {
                 if (warn) {
-                    long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - date.getTime()) + 1;
+                    long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - currentTime.getTime()) + 1;
                     if (days <= 7) {
-                        player.sendMessage(ChatColor.GREEN + "Your " + item + " for " + game + " will expire in " + (days <= 1 ? "less than a day!" : days + " days!"));
-                        player.sendMessage(ChatColor.GREEN + "Visit http://eyeofender.com/shop to purchase a new one.");
+                        player.sendMessage(ChatColor.YELLOW + "Your " + item + " for " + game + " will expire in " + (days <= 1 ? "less than a day!" : days + " days!"));
+                        player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to purchase a new one.");
                     }
                 }
             } else {
-                player.sendMessage(ChatColor.GREEN + "Your " + item + " for " + game + " has expired!");
-                player.sendMessage(ChatColor.GREEN + "Visit http://eyeofender.com/shop to purchase a new one.");
+                player.sendMessage(ChatColor.YELLOW + "Your " + item + " for " + game + " has expired!");
+                player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to purchase a new one.");
                 plugin.getDatabase().delete(purchases);
             }
         }
