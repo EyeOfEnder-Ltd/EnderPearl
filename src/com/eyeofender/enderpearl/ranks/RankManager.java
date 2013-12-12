@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 import com.eyeofender.enderpearl.EnderPearl;
 import com.google.common.collect.Maps;
@@ -92,6 +93,9 @@ public class RankManager {
     }
 
     public void updateRank(Player player, boolean warn) {
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(player);
+        if (team != null) team.removePlayer(player);
+
         String rankName = "default";
         RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
 
