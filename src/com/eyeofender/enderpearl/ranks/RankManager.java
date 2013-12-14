@@ -26,6 +26,8 @@ public class RankManager {
     private File configFile;
     private Map<String, Rank> ranks;
 
+    private static final String PATH_CONFIG = "/root/config/ranks.yml";
+
     public RankManager(EnderPearl plugin) {
         this.plugin = plugin;
         reloadConfig();
@@ -45,12 +47,13 @@ public class RankManager {
 
     private void reloadConfig() {
         if (configFile == null) {
-            configFile = new File("/root/config/ranks.yml");
+            configFile = new File(PATH_CONFIG);
         }
-        config = YamlConfiguration.loadConfiguration(configFile);
 
+        config = YamlConfiguration.loadConfiguration(configFile);
         InputStream defConfigStream = plugin.getResource("ranks.yml");
-        if (defConfigStream != null) {
+
+        if (!configFile.exists() || configFile.length() == 0) {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             config.setDefaults(defConfig);
             saveConfig();

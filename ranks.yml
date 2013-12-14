@@ -2,6 +2,9 @@ ranks:
     owner:
         colour: '&4'
         displayname: 'Owner'
+    webdev:
+        colour: '&3'
+        displayname: 'Webdev'
     admin:
         colour: '&4'
         displayname: 'Admin'
