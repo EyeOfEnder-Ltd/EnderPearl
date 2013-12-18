@@ -4,29 +4,43 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.avaje.ebean.validation.NotEmpty;
+import com.avaje.ebean.validation.NotNull;
 
 @Entity
-@Table(name = "GlobalPurchases")
-public class Purchase {
+@Table(name = "PlayerPurchases")
+public class PlayerPurchase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
     private String name;
 
-    @NotEmpty
+    @NotNull
     private String minigame;
 
-    @NotEmpty
+    @NotNull
     private String type;
 
-    @NotEmpty
+    @NotNull
     private String purchase;
 
     @Column
     private Timestamp expiry;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

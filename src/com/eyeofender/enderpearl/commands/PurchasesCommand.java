@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.eyeofender.enderpearl.EnderPearl;
-import com.eyeofender.enderpearl.purchases.Purchase;
+import com.eyeofender.enderpearl.purchases.PlayerPurchase;
 
 public class PurchasesCommand implements CommandExecutor {
 
@@ -23,7 +23,7 @@ public class PurchasesCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return false;
         Player player = (Player) sender;
-        List<Purchase> purchases = plugin.getPurchaseManager().getPurchases(player);
+        List<PlayerPurchase> purchases = plugin.getPurchaseManager().getPurchases(player);
 
         player.sendMessage(ChatColor.GREEN + "-- " + ChatColor.BOLD + "Purchases:" + ChatColor.RESET + ChatColor.GREEN + " -------");
 
@@ -31,7 +31,7 @@ public class PurchasesCommand implements CommandExecutor {
             player.sendMessage(ChatColor.RED + "You do not own any items!");
             player.sendMessage(ChatColor.GREEN + "Visit http://eyeofender.com/shop to purchase some.");
         } else {
-            for (Purchase purchase : purchases) {
+            for (PlayerPurchase purchase : purchases) {
                 String info = ChatColor.GOLD + "" + ChatColor.BOLD + purchase.getMinigame() + " " + purchase.getType() + ": " + ChatColor.RESET + ChatColor.GREEN + purchase.getPurchase();
                 player.sendMessage(purchase.getExpiry() != null ? info + ChatColor.GRAY + " Until " + purchase.getExpiry() : info);
             }

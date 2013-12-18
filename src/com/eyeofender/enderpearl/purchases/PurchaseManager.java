@@ -28,16 +28,16 @@ public class PurchaseManager {
         }, 0L, 20L * 60L);
     }
 
-    public List<Purchase> getPurchases(Player player) {
-        return plugin.getDatabase().find(Purchase.class).where().ieq("name", player.getName()).findList();
+    public List<PlayerPurchase> getPurchases(Player player) {
+        return plugin.getDatabase().find(PlayerPurchase.class).where().ieq("name", player.getName()).findList();
     }
 
-    public List<Purchase> getPurchases(Player player, String minigame, String type, String purchase) {
-        return plugin.getDatabase().find(Purchase.class).where().ieq("name", player.getName()).ieq("minigame", minigame).ieq("type", type).ieq("purchase", purchase).findList();
+    public List<PlayerPurchase> getPurchases(Player player, String minigame, String type, String purchase) {
+        return plugin.getDatabase().find(PlayerPurchase.class).where().ieq("name", player.getName()).ieq("minigame", minigame).ieq("type", type).ieq("purchase", purchase).findList();
     }
 
     public boolean has(Player player, String minigame, String type, String purchase) {
-        List<Purchase> purchases = getPurchases(player, minigame, type, purchase);
+        List<PlayerPurchase> purchases = getPurchases(player, minigame, type, purchase);
         return purchases != null && purchases.size() > 0;
     }
 
@@ -53,15 +53,15 @@ public class PurchaseManager {
         return has(player, minigame, "killstreak", killstreak);
     }
 
-    public void addPurchase(Purchase purchase) {
+    public void addPurchase(PlayerPurchase purchase) {
         plugin.getDatabase().save(purchase);
     }
 
     public void updatePurchases(Player player, boolean warn) {
-        List<Purchase> purchases = getPurchases(player);
+        List<PlayerPurchase> purchases = getPurchases(player);
         if (purchases == null) return;
 
-        for (Purchase purchase : purchases) {
+        for (PlayerPurchase purchase : purchases) {
             Timestamp expiry = purchase.getExpiry();
             if (expiry == null) continue;
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());

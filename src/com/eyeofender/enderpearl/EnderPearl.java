@@ -18,7 +18,7 @@ import com.eyeofender.enderpearl.commands.PurchasesCommand;
 import com.eyeofender.enderpearl.commands.SetSpawnCommand;
 import com.eyeofender.enderpearl.commands.SpawnCommand;
 import com.eyeofender.enderpearl.listeners.PlayerListener;
-import com.eyeofender.enderpearl.purchases.Purchase;
+import com.eyeofender.enderpearl.purchases.PlayerPurchase;
 import com.eyeofender.enderpearl.purchases.PurchaseManager;
 import com.eyeofender.enderpearl.ranks.RankEntry;
 import com.eyeofender.enderpearl.ranks.RankManager;
@@ -45,7 +45,7 @@ public class EnderPearl extends JavaPlugin {
 
         try {
             getDatabase().find(RankEntry.class).findRowCount();
-            getDatabase().find(Purchase.class).findRowCount();
+            getDatabase().find(PlayerPurchase.class).findRowCount();
         } catch (PersistenceException ex) {
             getLogger().info("Installing database due to first time usage.");
             installDDL();
@@ -87,7 +87,7 @@ public class EnderPearl extends JavaPlugin {
     public List<Class<?>> getDatabaseClasses() {
         List<Class<?>> list = new ArrayList<Class<?>>();
         list.add(RankEntry.class);
-        list.add(Purchase.class);
+        list.add(PlayerPurchase.class);
         return list;
     }
 

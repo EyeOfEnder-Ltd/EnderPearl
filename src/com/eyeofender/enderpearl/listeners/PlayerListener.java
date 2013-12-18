@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
@@ -54,4 +55,11 @@ public class PlayerListener implements Listener {
         event.setFormat("%s: " + ChatColor.RESET + "%s");
     }
 
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        String command = event.getMessage().toLowerCase().replace("/", "").split(" ")[0];
+        if (command.equals("op") || command.equals("pex")) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(ChatColor.RED + "This command can only be run by the console.");
+        }
+    }
 }
