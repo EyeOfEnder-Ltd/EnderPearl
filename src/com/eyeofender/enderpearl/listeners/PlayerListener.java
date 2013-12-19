@@ -55,7 +55,8 @@ public class PlayerListener implements Listener {
         event.setFormat("%s: " + ChatColor.RESET + "%s");
     }
 
-    public void onCommand(PlayerCommandPreprocessEvent event) {
+    @EventHandler
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().toLowerCase().replace("/", "").split(" ")[0];
         if (command.equals("op") || command.equals("pex")) {
             event.setCancelled(true);
