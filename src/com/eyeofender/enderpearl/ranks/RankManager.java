@@ -84,8 +84,8 @@ public class RankManager {
         }
     }
 
-    public RankEntry getRank(Player player) {
-        return plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
+    public PlayerRank getRank(Player player) {
+        return plugin.getDatabase().find(PlayerRank.class).where().ieq("name", player.getName()).findUnique();
     }
 
     public boolean hasRank(Player player) {
@@ -97,7 +97,7 @@ public class RankManager {
         if (team != null) team.removePlayer(player);
 
         String rankName = "default";
-        RankEntry entry = plugin.getDatabase().find(RankEntry.class).where().ieq("name", player.getName()).findUnique();
+        PlayerRank entry = plugin.getDatabase().find(PlayerRank.class).where().ieq("name", player.getName()).findUnique();
 
         if (entry != null) {
             Date expiry = entry.getExpiry();

@@ -57,6 +57,10 @@ public class PurchaseManager {
         plugin.getDatabase().save(purchase);
     }
 
+    public void removePurcahse(PlayerPurchase purchase) {
+        plugin.getDatabase().delete(purchase);
+    }
+
     public void updatePurchases(Player player, boolean warn) {
         List<PlayerPurchase> purchases = getPurchases(player);
         if (purchases == null) return;

@@ -20,7 +20,7 @@ import com.eyeofender.enderpearl.commands.SpawnCommand;
 import com.eyeofender.enderpearl.listeners.PlayerListener;
 import com.eyeofender.enderpearl.purchases.PlayerPurchase;
 import com.eyeofender.enderpearl.purchases.PurchaseManager;
-import com.eyeofender.enderpearl.ranks.RankEntry;
+import com.eyeofender.enderpearl.ranks.PlayerRank;
 import com.eyeofender.enderpearl.ranks.RankManager;
 
 public class EnderPearl extends JavaPlugin {
@@ -44,7 +44,7 @@ public class EnderPearl extends JavaPlugin {
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", broadcast);
 
         try {
-            getDatabase().find(RankEntry.class).findRowCount();
+            getDatabase().find(PlayerRank.class).findRowCount();
             getDatabase().find(PlayerPurchase.class).findRowCount();
         } catch (PersistenceException ex) {
             getLogger().info("Installing database due to first time usage.");
@@ -86,7 +86,7 @@ public class EnderPearl extends JavaPlugin {
     @Override
     public List<Class<?>> getDatabaseClasses() {
         List<Class<?>> list = new ArrayList<Class<?>>();
-        list.add(RankEntry.class);
+        list.add(PlayerRank.class);
         list.add(PlayerPurchase.class);
         return list;
     }

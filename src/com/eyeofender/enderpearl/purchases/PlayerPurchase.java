@@ -31,6 +31,9 @@ public class PlayerPurchase {
     @NotNull
     private String purchase;
 
+    @NotNull
+    private Timestamp timestamp;
+
     @Column
     private Timestamp expiry;
 
@@ -74,12 +77,20 @@ public class PlayerPurchase {
         this.purchase = purchase;
     }
 
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public Timestamp getExpiry() {
-        return expiry;
+        return timestamp;
     }
 
     public void setExpiry(Timestamp expiry) {
-        this.expiry = expiry;
+        this.timestamp = expiry;
     }
 
 }
