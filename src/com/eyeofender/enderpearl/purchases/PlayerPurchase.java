@@ -86,11 +86,11 @@ public class PlayerPurchase {
     }
 
     public Timestamp getExpiry() {
-        return timestamp;
+        return expiry;
     }
 
     public void setExpiry(Timestamp expiry) {
-        this.timestamp = expiry;
+        this.expiry = expiry;
     }
 
 }
