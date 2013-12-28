@@ -83,7 +83,7 @@ public class PurchaseManager {
             } else {
                 player.sendMessage(ChatColor.YELLOW + "Your " + item + " for " + game + " has expired!");
                 player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to purchase a new one.");
-                plugin.getDatabase().delete(purchases);
+                plugin.getDatabase().delete(purchase);
             }
         }
     }
