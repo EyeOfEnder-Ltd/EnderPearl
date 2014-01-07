@@ -1,35 +1,36 @@
-package com.eyeofender.enderpearl.purchases;
+package com.eyeofender.enderpearl.sql;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.avaje.ebean.validation.NotNull;
 
 @Entity
-@Table(name = "Old_PlayerPurchases")
-public class PlayerPurchase {
+@Table(name = "PlayerRank")
+public class SQLPlayerRank {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotNull
-    private String name;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private SQLPlayer player;
 
     @NotNull
-    private String minigame;
-
-    @NotNull
-    private String type;
-
-    @NotNull
-    private String purchase;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private SQLRank rank;
 
     @NotNull
     private Timestamp timestamp;
@@ -37,44 +38,28 @@ public class PlayerPurchase {
     @Column
     private Timestamp expiry;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public SQLPlayer getPlayer() {
+        return player;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayer(SQLPlayer player) {
+        this.player = player;
     }
 
-    public String getMinigame() {
-        return minigame;
+    public SQLRank getRank() {
+        return rank;
     }
 
-    public void setMinigame(String minigame) {
-        this.minigame = minigame;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(String purchase) {
-        this.purchase = purchase;
+    public void setRank(SQLRank rank) {
+        this.rank = rank;
     }
 
     public Timestamp getTimestamp() {

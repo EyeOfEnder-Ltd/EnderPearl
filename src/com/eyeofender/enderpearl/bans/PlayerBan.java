@@ -1,4 +1,4 @@
-package com.eyeofender.enderpearl.purchases;
+package com.eyeofender.enderpearl.bans;
 
 import java.sql.Timestamp;
 
@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import com.avaje.ebean.validation.NotNull;
 
 @Entity
-@Table(name = "Old_PlayerPurchases")
-public class PlayerPurchase {
+@Table(name = "Old_PlayerBans")
+public class PlayerBan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,10 @@ public class PlayerPurchase {
     private String name;
 
     @NotNull
-    private String minigame;
+    private String byWhom;
 
     @NotNull
-    private String type;
-
-    @NotNull
-    private String purchase;
+    private String reason;
 
     @NotNull
     private Timestamp timestamp;
@@ -53,28 +50,20 @@ public class PlayerPurchase {
         this.name = name;
     }
 
-    public String getMinigame() {
-        return minigame;
+    public String getByWhom() {
+        return byWhom;
     }
 
-    public void setMinigame(String minigame) {
-        this.minigame = minigame;
+    public void setByWhom(String byWhom) {
+        this.byWhom = byWhom;
     }
 
-    public String getType() {
-        return type;
+    public String getReason() {
+        return reason;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(String purchase) {
-        this.purchase = purchase;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public Timestamp getTimestamp() {

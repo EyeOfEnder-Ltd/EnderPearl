@@ -1,37 +1,26 @@
 package com.eyeofender.enderpearl.ranks;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
-import java.util.Map;
+import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import com.eyeofender.enderpearl.EnderPearl;
-import com.google.common.collect.Maps;
+import com.eyeofender.enderpearl.sql.SQLPlayerRank;
 
 public class RankManager {
 
     private EnderPearl plugin;
-    private FileConfiguration config;
-    private File configFile;
-    private Map<String, Rank> ranks;
+    private Scoreboard scoreboard;
 
     public RankManager(EnderPearl plugin) {
         this.plugin = plugin;
-        reloadConfig();
-        this.ranks = Maps.newHashMap();
-
-        loadRanks();
+        this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new BukkitRunnable() {
             @Override
@@ -43,49 +32,8 @@ public class RankManager {
         }, 0L, 20L * 60L);
     }
 
-    private void reloadConfig() {
-        if (configFile == null) {
-            configFile = new File("/root/config/ranks.yml");
-        }
-        config = YamlConfiguration.loadConfiguration(configFile);
-
-        InputStream defConfigStream = plugin.getResource("ranks.yml");
-        if (defConfigStream != null) {
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-            config.setDefaults(defConfig);
-            saveConfig();
-        }
-    }
-
-    private FileConfiguration getConfig() {
-        if (config == null) {
-            reloadConfig();
-        }
-        return config;
-    }
-
-    private void saveConfig() {
-        if (config == null || configFile == null) {
-            return;
-        }
-        try {
-            getConfig().save(configFile);
-        } catch (IOException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
-        }
-    }
-
-    private void loadRanks() {
-        for (String name : getConfig().getConfigurationSection("ranks").getKeys(false)) {
-            String path = "ranks." + name + ".";
-            String colour = getConfig().getString(path + "colour");
-            String display = getConfig().getString(path + "displayname");
-            ranks.put(name, new Rank(colour, display, Bukkit.getScoreboardManager().getMainScoreboard()));
-        }
-    }
-
-    public PlayerRank getRank(Player player) {
-        return plugin.getDatabase().find(PlayerRank.class).where().ieq("name", player.getName()).findUnique();
+    public SQLPlayerRank getRank(Player player) {
+        return plugin.getDatabase().find(SQLPlayerRank.class).where().ieq("name", player.getName()).findUnique();
     }
 
     public boolean hasRank(Player player) {
@@ -93,45 +41,48 @@ public class RankManager {
     }
 
     public void updateRank(Player player, boolean warn) {
-        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(player);
+        Team team = scoreboard.getPlayerTeam(player);
         if (team != null) team.removePlayer(player);
 
-        String rankName = "default";
-        PlayerRank entry = plugin.getDatabase().find(PlayerRank.class).where().ieq("name", player.getName()).findUnique();
+        SQLPlayerRank rank = getRank(player);
 
-        if (entry != null) {
-            Date expiry = entry.getExpiry();
+        if (rank != null) {
+            Timestamp expiry = rank.getExpiry();
 
-            if (expiry != null) {
-                Date date = new Date(new java.util.Date().getTime());
-                String type = entry.getRank();
-                if (expiry.after(date)) {
-                    if (warn) {
-                        long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - date.getTime()) + 1;
-                        if (days <= 7) {
-                            player.sendMessage(ChatColor.GOLD + "Your " + type + " membership will expire in " + days + (days == 1 ? " day!" : " days!"));
-                            player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to renew your membership.");
-                        }
+            if (expiry == null) {
+                rank.getRank().apply(player, scoreboard);
+                return;
+            }
+
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
+            if (expiry.after(currentTime)) {
+                if (warn) {
+                    long days = TimeUnit.MILLISECONDS.toDays(expiry.getTime() - currentTime.getTime()) + 1;
+                    if (days <= 7) {
+                        player.sendMessage(ChatColor.YELLOW + "Your " + rank.getRank().getName() + " membership will expire in " + days + (days == 1 ? " day!" : " days!"));
+                        player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to renew your membership.");
                     }
-                    rankName = type;
-                } else {
-                    player.sendMessage(ChatColor.GOLD + "Your " + type + " membership has expired!");
-                    player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to renew your membership.");
-                    plugin.getDatabase().delete(entry);
                 }
             } else {
-                rankName = entry.getRank();
+                player.sendMessage(ChatColor.YELLOW + "Your " + rank.getRank().getName() + " membership has expired!");
+                player.sendMessage(ChatColor.GOLD + "Visit http://eyeofender.com/shop to purchase a new one.");
+                plugin.getDatabase().delete(rank);
+                rank = null;
             }
         }
 
-        Rank rank = ranks.get(rankName);
-
         if (rank == null) {
-            plugin.getLogger().warning("Could not find " + player.getName() + "'s rank, " + rankName);
-            return;
+            team = scoreboard.getTeam("Default");
+
+            if (team == null) {
+                team = scoreboard.registerNewTeam("Default");
+            }
+
+            team.addPlayer(player);
+            player.setDisplayName(ChatColor.GRAY + player.getName());
         }
 
-        rank.apply(player);
+        rank.getRank().apply(player, Bukkit.getScoreboardManager().getMainScoreboard());
     }
-
 }

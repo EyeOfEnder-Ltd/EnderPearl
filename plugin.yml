@@ -1,7 +1,7 @@
 name: EnderPearl
 main: com.eyeofender.enderpearl.EnderPearl
 author: LimeByte
-version: 1.3.2
+version: 1.4.0
 database: true
 commands:
     broadcast:
@@ -27,6 +27,24 @@ commands:
         description: Lists your purchases
         usage: /<command>
         permission: enderpearl.command.purchases
+    bans:
+        description: Lists player bans
+        usage: /<command>
+        permission: enderpearl.command.bans
+        aliases: banlist
+    ban:
+        description: Bans a player
+        usage: /<command> <player> <time> <reason...>
+        permission: enderpearl.command.ban
+    pardon:
+        description: Unbans a player
+        usage: /<command> <player>
+        permission: enderpearl.command.pardon
+        aliases: unban
+    baninfo:
+        description: Lists player ban info
+        usage: /<command> <player>
+        permission: enderperal.command.baninfo
 permissions:
     enderpearl.command.broadcast:
         description: Permission to use the broadcast command
@@ -43,3 +61,15 @@ permissions:
     enderpearl.command.purchases:
         description: Permission to use the purchases command
         default: true
+    enderpearl.command.bans:
+        description: Permission to use the bans command
+        default: op
+    enderpearl.command.ban:
+        description: Permission to use the ban command
+        default: op
+    enderpearl.command.pardon:
+        description: Permission to use the pardon command
+        default: op
+    enderpearl.command.baninfo:
+        description: Permission to use the baninfo command
+        default: op

@@ -39,6 +39,7 @@ public class PlayerListener implements Listener {
 
         plugin.getRankManager().updateRank(player, true);
         plugin.getPurchaseManager().updatePurchases(player, true);
+        plugin.getSqlManager().onJoin(player);
 
         if (plugin.getSpawnLocation() != null) {
             Location loc = plugin.getSpawnLocation();
