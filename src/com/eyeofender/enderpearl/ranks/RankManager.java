@@ -11,6 +11,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import com.eyeofender.enderpearl.EnderPearl;
+import com.eyeofender.enderpearl.sql.SQLPlayer;
 import com.eyeofender.enderpearl.sql.SQLPlayerRank;
 
 public class RankManager {
@@ -33,7 +34,9 @@ public class RankManager {
     }
 
     public SQLPlayerRank getRank(Player player) {
-        return plugin.getDatabase().find(SQLPlayerRank.class).where().ieq("name", player.getName()).findUnique();
+        SQLPlayer sqlPlayer = plugin.getSqlManager().getSQLPlayer(player);
+        if (sqlPlayer == null) return null;
+        return plugin.getDatabase().find(SQLPlayerRank.class).where().eq("player_id", sqlPlayer.getId()).findUnique();
     }
 
     public boolean hasRank(Player player) {
@@ -81,6 +84,7 @@ public class RankManager {
 
             team.addPlayer(player);
             player.setDisplayName(ChatColor.GRAY + player.getName());
+            return;
         }
 
         rank.getRank().apply(player, Bukkit.getScoreboardManager().getMainScoreboard());

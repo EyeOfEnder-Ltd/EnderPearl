@@ -10,8 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.eyeofender.enderpearl.EnderPearl;
 
@@ -37,9 +39,8 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        plugin.getRankManager().updateRank(player, true);
-        plugin.getPurchaseManager().updatePurchases(player, true);
         plugin.getSqlManager().onJoin(player);
+        plugin.getPurchaseManager().updatePurchases(player, true);
 
         if (plugin.getSpawnLocation() != null) {
             Location loc = plugin.getSpawnLocation();
@@ -49,6 +50,16 @@ public class PlayerListener implements Listener {
 
             player.teleport(new Location(loc.getWorld(), loc.getX() + xAddition, loc.getY(), loc.getZ() + zAddition, yaw, loc.getPitch()));
         }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        plugin.getSqlManager().onLeave(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent event) {
+        plugin.getSqlManager().onLeave(event.getPlayer());
     }
 
     @EventHandler

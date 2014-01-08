@@ -27,7 +27,6 @@ public class SQLServer {
     @NotNull
     private int port;
 
-    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     private SQLGame game;
 

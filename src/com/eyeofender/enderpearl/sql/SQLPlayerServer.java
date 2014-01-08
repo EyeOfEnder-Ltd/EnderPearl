@@ -27,7 +27,6 @@ public class SQLPlayerServer {
     @PrimaryKeyJoinColumn
     private SQLPlayer player;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private SQLServer server;
